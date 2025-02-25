@@ -12,7 +12,7 @@ def t2s():
     print(data)
 
     QUERY = data.get('text')
-    API_KEY = "AIzaSyCLl1TPjh26VdaE_KKN8UoWvAV2xWSkCaI"
+    API_KEY ='<API_KEY>'
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={QUERY}&key={API_KEY}"
 
     all_places = []
