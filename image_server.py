@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-API_KEY = "AIzaSyCLl1TPjh26VdaE_KKN8UoWvAV2xWSkCaI"
+API_KEY = '<API_KEY>'
 
 @app.route('/mapview', methods=['POST'])
 def get_street_view():
