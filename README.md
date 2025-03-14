@@ -195,6 +195,3 @@ DSCI_511_Project/
 
 - **Drexel’s TUX Server:**  
   Internal resource used for extended training sessions
-
-- **Warehouse Store User Spending Repository:**  
-  [https://github.com/aryamonani/warehouse-store-user-spending.git](https://github.com/aryamonani/warehouse-store-user-spending.git)
