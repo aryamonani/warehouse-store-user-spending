@@ -104,23 +104,37 @@ This project aims to gather information about warehouse stores like Costco in No
 ### Code Files and Integration Challenges
 
 - **Integration of Multiple Code Files:**  
-  Our codebase includes key files such as `image_server.py`, `run.py`, and `server.py`, which manage image retrieval, model inference, and serving the results via an API.
+  Our codebase includes three key files: `image_server.py`, `run.py`, and `server.py`, which handle location searching, map retrieval, and API-based data processing.
 
   - **`image_server.py`:**  
-    Handles image processing tasks and may implement functionality for serving processed images with detection boxes.
+    Implements a Flask server that provides a `/mapview` API endpoint.
+    Uses `Google Maps Geocoding API` to obtain latitude and longitude from a given text query (e.g., a city or store name).
+    Constructs a `Google Static Maps API` URL to fetch a satellite image of the location.
+    Returns the location’s coordinates and a URL to the static map image.
 
   - **`run.py`:**  
-    Orchestrates the inference pipeline, processes a folder of images, and outputs JSON files (e.g., `records.json` and `car_counts.json`).
+    Retrieves a list of counties from a` U.S. Census Bureau` data source.
+    Uses the `/ggmap` API (from `server.py`) to search for stores with parking in a given county.
+    Calls the `/mapview` API (from `image_server.py`) to obtain a static map of the store locations.
+    Saves results in `records.json` and downloads the map images.
 
   - **`server.py`:**  
-    Provides additional server-side logic and API endpoints to integrate the model predictions with downstream applications.
+    Implements a Flask server providing a `/ggmap` API endpoint.
+    Uses `Google Places Text Search API` to find store locations based on text queries.
+    Returns a list of store names, addresses, latitude/longitude coordinates, and place IDs.
 
   These files posed challenges in terms of asynchronous processing, error handling, and ensuring compatibility across different environments (Google Colab and Drexel’s TUX server).
 
 ### API and Infrastructure Challenges
 
-- **Google Maps APIs:**  
-  While powerful, the Text Search API and Street View API imposed rate limits and sometimes returned inconsistent image quality. Robust error handling and fallback strategies were essential.
+- **Google Maps API Rate Limits:**  
+  The Google Maps APIs have strict rate limits, which can affect the speed and reliability of location queries and image retrieval. Implementing request throttling and handling rate limit errors is necessary to ensure stable execution.
+
+- **Google Maps API Rate Limits:**  
+When retrieving paginated results from the Google Places Text Search API, the next page token is not immediately valid after being issued. If the next request is made too quickly, it may result in an empty response. To avoid this, we introduce a delay before requesting the next page of results to ensure the token becomes active.
+
+- **Data Storage and Processing Efficiency:**
+The collected data, including store locations, static map URLs, and related metadata, must be structured efficiently for downstream processing. Ensuring a well-defined storage format and handling potential data inconsistencies is an ongoing challenge.
 
 - **Google Colab Free GPU:**  
   Although convenient for rapid prototyping, Colab’s free GPU sessions are time-limited and can disconnect unexpectedly. This led to interruptions during long training sessions.
