@@ -122,6 +122,26 @@ This project aims to gather information about warehouse stores like Costco in No
     Implements a Flask server providing a `/ggmap` API endpoint.
     Uses `Google Places Text Search API` to find store locations based on text queries.
     Returns a list of store names, addresses, latitude/longitude coordinates, and place IDs.
+    
+  - **`car_counter.ipynb`:**  
+    The `car_counter.ipynb` notebook provides an end-to-end demonstration of how to detect and count cars in a set of images using a pre-trained YOLOv5 model. This notebook is particularly useful if you want to quickly evaluate parking lot occupancy or run inference on a custom folder of images.
+      
+      1. *Model Loading:*  
+         - Automatically downloads or loads a YOLOv5 model (e.g., `best.pt`) trained on the aerial-cars-dataset or any other relevant dataset.
+         - Optionally sets the confidence threshold to filter out low-confidence detections.
+      
+      2. *Image Inference:*  
+         - Iterates through all images in a specified folder (e.g., `/content/drive/MyDrive/images`) and runs YOLOv5 inference.
+         - Outputs bounding boxes, class labels, and confidence scores for each detection.
+      
+      3. *Car Counting:*  
+         - Aggregates the number of detections labeled as "car" for each image.
+         - Saves the results to a JSON file (e.g., `car_counts.json`), mapping image filenames to their respective car counts.
+      
+      4. *Visualization:*  
+         - Optionally renders bounding boxes on images to help visually verify detection results.
+         - Displays a subset of images in the notebook with bounding boxes drawn around detected cars.
+
 
   These files posed challenges in terms of asynchronous processing, error handling, and ensuring compatibility across different environments (Google Colab and Drexel’s TUX server).
 
